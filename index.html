@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection"
+        content="telephone=no, date=no, email=no, address=no" />
+
+  <title>Message Tracker • Чаты</title>
+
+  <!-- Telegram WebApp Script -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- Летящие лепестки поверх фона -->
+    <div class="petals-layer">
+      <div class="petal">❀</div>
+      <div class="petal">✿</div>
+      <div class="petal">❁</div>
+      <div class="petal">❄</div>
+      <div class="petal">❅</div>
+      <div class="petal">❆</div>
+    </div>
+
+    <!-- Верхняя панель -->
+    <header class="app-header glass">
+      <div class="header-left">
+        <div class="header-title-main">Message Tracker</div>
+        <div class="header-title-sub">Ваши чаты и события</div>
+      </div>
+      <div class="header-right" id="user-info">
+        <!-- app.js подставит имя / юзернейм -->
+      </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="app-main">
+
+      <!-- Панель управления сверху -->
+      <div class="top-toolbar glass">
+        <div class="toolbar-left">
+          <button class="pill-button active" data-mode="all">
+            Все чаты
+          </button>
+          <button class="pill-button" data-mode="private">
+            Личные
+          </button>
+          <button class="pill-button" data-mode="groups">
+            Группы
+          </button>
+        </div>
+        <div class="toolbar-right">
+          <button class="icon-button" id="refresh-btn" title="Обновить">
+            ⟳
+          </button>
+        </div>
+      </div>
+
+      <!-- Переключатель вкладок -->
+      <div class="tabs-top glass">
+        <button class="tab-top-btn active" data-tab="chats">Чаты</button>
+        <button class="tab-top-btn" data-tab="events">События</button>
+        <button class="tab-top-btn" data-tab="stats">Статистика</button>
+        <button class="tab-top-btn" data-tab="settings">Управление</button>
+      </div>
+
+      <!-- Вкладка: чаты -->
+      <section class="tab-content active" id="tab-chats">
+        <div class="section-header">
+          <div class="section-title">Чаты, где работает трекер</div>
+          <div class="section-subtitle">
+            Бот показывает только те чаты, где он есть и видит сообщения.
+          </div>
+        </div>
+
+        <div class="chat-list" id="chat-list">
+          <!-- Заполняется из app.js: все чаты пользователя -->
+          <!-- Пример структуры:
+          <article class="chat-card">
+            <div class="chat-avatar">MT</div>
+            <div class="chat-info">
+              <div class="chat-title-row">
+                <div class="chat-title">Название чата</div>
+                <div class="chat-type">Группа</div>
+              </div>
+              <div class="chat-meta-row">
+                <div class="chat-last-message">Последнее сообщение…</div>
+                <div class="chat-counter">
+                  <span>+24</span>
+                  <span>сообщения</span>
+                </div>
+              </div>
+            </div>
+          </article>
+          -->
+        </div>
+      </section>
+
+      <!-- Вкладка: события (изменённые/удалённые) -->
+      <section class="tab-content" id="tab-events">
+        <div class="section-header">
+          <div class="section-title">События в реальном времени</div>
+          <div class="section-subtitle">
+            Изменённые и удалённые сообщения по активным чатам.
+          </div>
+        </div>
+
+        <div class="events-panel glass">
+          <div class="events-header">
+            <span>Последние события</span>
+            <span class="events-status" id="events-status">Ожидание…</span>
+          </div>
+          <div class="events-list" id="events-list">
+            <!-- app.js добавляет сюда события -->
+            <!-- Пример структуры:
+            <div class="event-item event-deleted">
+              <div class="event-meta">
+                <div class="event-user">
+                  <img class="event-avatar" src="..." alt="">
+                  <div class="event-user-info">
+                    <span class="event-user-name">Имя Пользователя</span>
+                    <span class="event-user-id">@user_id</span>
+                  </div>
+                </div>
+                <span class="event-time">18:32</span>
+              </div>
+              <div class="event-body">
+                <div class="event-type deleted">Удалено</div>
+                <div class="event-text-old">Было: текст сообщения</div>
+              </div>
+            </div>
+
+            <div class="event-item event-edited">
+              <div class="event-meta">
+                <div class="event-user">
+                  <img class="event-avatar" src="..." alt="">
+                  <div class="event-user-info">
+                    <span class="event-user-name">Имя Пользователя</span>
+                    <span class="event-user-id">@user_id</span>
+                  </div>
+                </div>
+                <span class="event-time">18:33</span>
+              </div>
+              <div class="event-body">
+                <div class="event-type edited">Изменено</div>
+                <div class="event-text-old">Было: старый текст</div>
+                <div class="event-text-new">Стало: новый текст</div>
+              </div>
+            </div>
+            -->
+          </div>
+        </div>
+      </section>
+
+      <!-- Вкладка: статистика -->
+      <section class="tab-content" id="tab-stats">
+        <div class="section-header">
+          <div class="section-title">Общая статистика</div>
+          <div class="section-subtitle">
+            Краткий обзор активности по вашим чатам.
+          </div>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stats-card glass">
+            <div class="stats-label">Сообщений за сегодня</div>
+            <div class="stats-value" id="stats-total">—</div>
+          </div>
+          <div class="stats-card glass">
+            <div class="stats-label">Самый активный чат</div>
+            <div class="stats-value stats-value-small" id="stats-top-chat">—</div>
+          </div>
+          <div class="stats-card glass">
+            <div class="stats-label">Сообщений в минуту</div>
+            <div class="stats-value" id="stats-per-minute">—</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Вкладка: управление ботом и настройками -->
+      <section class="tab-content" id="tab-settings">
+        <div class="section-header">
+          <div class="section-title">Настройки и команды</div>
+          <div class="section-subtitle">
+            Управляйте тем, что трекер видит и как бот работает.
+          </div>
+        </div>
+
+        <!-- Базовые тумблеры -->
+        <div class="settings-block glass">
+          <div class="settings-row">
+            <span>Отслеживать личные чаты</span>
+            <label class="toggle">
+              <input type="checkbox" id="setting-private" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <span>Отслеживать групповые чаты</span>
+            <label class="toggle">
+              <input type="checkbox" id="setting-group" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+
+          <div class="settings-row">
+            <span>Показывать события в реальном времени</span>
+            <label class="toggle">
+              <input type="checkbox" id="setting-live" checked />
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Продвинутые команды бота -->
+        <div class="settings-block glass">
+          <div class="settings-row">
+            <span>Команды бота</span>
+            <span class="settings-hint">Нажмите, чтобы отправить команду</span>
+          </div>
+
+          <div class="settings-commands">
+            <div class="command-group">
+              <div class="command-group-title">Основные</div>
+              <div class="command-list">
+                <button class="command-pill" data-command="/help">/help — меню</button>
+                <button class="command-pill" data-command="/stats">/stats — статистика</button>
+                <button class="command-pill" data-command="/echo">/echo — повтор</button>
+                <button class="command-pill" data-command="/quote">/quote — цитата</button>
+              </div>
+            </div>
+
+            <div class="command-group">
+              <div class="command-group-title">Заметки</div>
+              <div class="command-list">
+                <button class="command-pill" data-command="/remember">/remember — сохранить</button>
+                <button class="command-pill" data-command="/notes">/notes — список</button>
+                <button class="command-pill" data-command="/clearnotes">/clearnotes — очистить</button>
+              </div>
+            </div>
+
+            <div class="command-group">
+              <div class="command-group-title">Сообщения</div>
+              <div class="command-list">
+                <button class="command-pill" data-command="/top">/top — история</button>
+                <button class="command-pill" data-command="/spam">/spam — рассылка</button>
+                <button class="command-pill" data-command="/fix">/fix — орфография</button>
+                <button class="command-pill" data-command="/voice">/voice — распознать</button>
+                <button class="command-pill" data-command="/del">/del — удалить</button>
+              </div>
+            </div>
+
+            <div class="command-group">
+              <div class="command-group-title">Управление</div>
+              <div class="command-list">
+                <button class="command-pill" data-command="/clean">/clean — кэш</button>
+                <button class="command-pill" data-command="/cleand">/cleand — кэш (глубоко)</button>
+                <button class="command-pill" data-command="/mute">/mute — мут</button>
+                <button class="command-pill" data-command="/unmute">/unmute — снять мут</button>
+                <button class="command-pill" data-command="/block">/block — блокировка</button>
+                <button class="command-pill" data-command="/unblock">/unblock — разблокировка</button>
+                <button class="command-pill" data-command="/pin">/pin — закреп</button>
+                <button class="command-pill" data-command="/unpin">/unpin — открепить</button>
+              </div>
+            </div>
+
+            <div class="command-group">
+              <div class="command-group-title">Информация</div>
+              <div class="command-list">
+                <button class="command-pill" data-command="/log">/log — логи</button>
+                <button class="command-pill" data-command="/group">/group — настройки группы</button>
+                <button class="command-pill" data-command="/id">/id — ID</button>
+                <button class="command-pill" data-command="/whois">/whois — инфо</button>
+                <button class="command-pill" data-command="/search">/search — мониторинг</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Нижняя навигация -->
+    <nav class="bottom-nav glass">
+      <button class="bottom-btn active" data-tab="chats">
+        <span class="bottom-icon">💬</span>
+        <span class="bottom-label">Чаты</span>
+      </button>
+      <button class="bottom-btn" data-tab="events">
+        <span class="bottom-icon">⚡</span>
+        <span class="bottom-label">События</span>
+      </button>
+      <button class="bottom-btn" data-tab="stats">
+        <span class="bottom-icon">📊</span>
+        <span class="bottom-label">Статистика</span>
+      </button>
+      <button class="bottom-btn" data-tab="settings">
+        <span class="bottom-icon">⚙️</span>
+        <span class="bottom-label">Управление</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- JS‑логика (app.js будет отвечать за рендер, polling и отправку команд) -->
+  <script src="app.js"></script>
+</body>
+</html>
