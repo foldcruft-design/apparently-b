@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection" content="telephone=no, date=no, email=no, address=no" />
+
+  <title>Message Tracker Mini App</title>
+
+  <!-- Подключаем стили -->
+  <link rel="stylesheet" href="styles.css" />
+
+  <!-- Telegram WebApp Script -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <div class="app">
+    <!-- Верхний хедер -->
+    <header class="app-header">
+      <div class="header-title">
+        <span class="header-main">Мои чаты</span>
+        <span class="header-sub">Трекер сообщений</span>
+      </div>
+      <div class="header-user" id="user-info">
+        <!-- сюда JS подставит имя пользователя -->
+      </div>
+    </header>
+
+    <!-- Анимированный фон со "снежинками" -->
+    <div class="snow-container">
+      <div class="snowflake">*</div>
+      <div class="snowflake">✦</div>
+      <div class="snowflake">✧</div>
+      <div class="snowflake">✺</div>
+      <div class="snowflake">✻</div>
+      <div class="snowflake">✶</div>
+    </div>
+
+    <!-- Основной контейнер контента -->
+    <main class="app-main">
+      <!-- Верхний переключатель вкладок (чаты / статистика / настройки) -->
+      <div class="tabs-top">
+        <button class="tab-top-btn active" data-tab="chats">Чаты</button>
+        <button class="tab-top-btn" data-tab="stats">Статистика</button>
+        <button class="tab-top-btn" data-tab="settings">Настройки</button>
+      </div>
+
+      <!-- Секция: список чатов -->
+      <section class="tab-content active" id="tab-chats">
+        <div class="chat-list" id="chat-list">
+          <!-- Пример карточек чатов, реальные данные подставит JS -->
+          <!-- JS заменит это мок‑данными или ответом от сервера -->
+        </div>
+      </section>
+
+      <!-- Секция: статистика -->
+      <section class="tab-content" id="tab-stats">
+        <div class="stats-card">
+          <h2>Общая активность</h2>
+          <p class="stats-number" id="stats-total">—</p>
+          <p class="stats-label">сообщений за сегодня</p>
+        </div>
+        <div class="stats-row">
+          <div class="stats-card small">
+            <h3>Самый активный чат</h3>
+            <p id="stats-top-chat">—</p>
+          </div>
+          <div class="stats-card small">
+            <h3>Сообщений в минуту</h3>
+            <p id="stats-per-minute">—</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Секция: настройки -->
+      <section class="tab-content" id="tab-settings">
+        <div class="settings-block">
+          <h2>Настройки трекинга</h2>
+          <label class="toggle">
+            <span>Отслеживать приватные чаты</span>
+            <input type="checkbox" id="setting-private" checked />
+            <span class="toggle-slider"></span>
+          </label>
+          <label class="toggle">
+            <span>Отслеживать групповые чаты</span>
+            <input type="checkbox" id="setting-group" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+    </main>
+
+    <!-- Нижняя панель навигации -->
+    <nav class="bottom-nav">
+      <button class="bottom-btn active" data-tab="chats">
+        <span class="bottom-icon">💬</span>
+        <span class="bottom-label">Чаты</span>
+      </button>
+      <button class="bottom-btn" data-tab="stats">
+        <span class="bottom-icon">📊</span>
+        <span class="bottom-label">Статистика</span>
+      </button>
+      <button class="bottom-btn" data-tab="settings">
+        <span class="bottom-icon">⚙️</span>
+        <span class="bottom-label">Настройки</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Логика приложения -->
+  <script src="app.js"></script>
+</body>
+</html>
