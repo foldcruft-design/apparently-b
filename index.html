@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport"
+        content="width=device-width, initial-scale=1.0" />
+  <meta name="format-detection"
+        content="telephone=no, date=no, email=no, address=no" />
+
+  <title>Чаты и трекер сообщений</title>
+
+  <!-- Telegram WebApp Script -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+  <!-- Стили -->
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="app">
+
+    <!-- Декоративный фон с летающими лепестками -->
+    <div class="petals-layer">
+      <div class="petal">❀</div>
+      <div class="petal">✿</div>
+      <div class="petal">❁</div>
+      <div class="petal">❀</div>
+      <div class="petal">✿</div>
+      <div class="petal">❁</div>
+    </div>
+
+    <!-- Верхняя панель -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="header-title-main">Мои чаты</div>
+        <div class="header-title-sub">Трекер сообщений</div>
+      </div>
+      <div class="header-right" id="user-info">
+        <!-- сюда JS подставит имя пользователя -->
+      </div>
+    </header>
+
+    <!-- Основной контент -->
+    <main class="app-main">
+      <!-- Верхний переключатель вкладок -->
+      <div class="tabs-top">
+        <button class="tab-top-btn active" data-tab="chats">Чаты</button>
+        <button class="tab-top-btn" data-tab="stats">Статистика</button>
+        <button class="tab-top-btn" data-tab="settings">Настройки</button>
+      </div>
+
+      <!-- Вкладка: чаты пользователя -->
+      <section class="tab-content active" id="tab-chats">
+        <div class="section-title">Все ваши чаты</div>
+        <div class="section-subtitle">
+          Здесь будут показаны чаты, которые бот видит и анализирует.
+        </div>
+
+        <div class="chat-list" id="chat-list">
+          <!-- JS подставляет реальные данные с сервера -->
+        </div>
+      </section>
+
+      <!-- Вкладка: статистика -->
+      <section class="tab-content" id="tab-stats">
+        <div class="section-title">Общая статистика</div>
+        <div class="stats-grid">
+          <div class="stats-card">
+            <div class="stats-label">Сообщений за сегодня</div>
+            <div class="stats-value" id="stats-total">—</div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-label">Самый активный чат</div>
+            <div class="stats-value stats-value-small" id="stats-top-chat">—</div>
+          </div>
+          <div class="stats-card">
+            <div class="stats-label">Сообщений в минуту</div>
+            <div class="stats-value" id="stats-per-minute">—</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Вкладка: настройки -->
+      <section class="tab-content" id="tab-settings">
+        <div class="section-title">Настройки трекера</div>
+        <div class="settings-block">
+          <label class="toggle">
+            <span class="toggle-label">Отслеживать личные чаты</span>
+            <input type="checkbox" id="setting-private" checked />
+            <span class="toggle-slider"></span>
+          </label>
+
+          <label class="toggle">
+            <span class="toggle-label">Отслеживать групповые чаты</span>
+            <input type="checkbox" id="setting-group" checked />
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+    </main>
+
+    <!-- Нижняя навигация -->
+    <nav class="bottom-nav">
+      <button class="bottom-btn active" data-tab="chats">
+        <span class="bottom-icon">💬</span>
+        <span class="bottom-label">Чаты</span>
+      </button>
+      <button class="bottom-btn" data-tab="stats">
+        <span class="bottom-icon">📊</span>
+        <span class="bottom-label">Статистика</span>
+      </button>
+      <button class="bottom-btn" data-tab="settings">
+        <span class="bottom-icon">⚙️</span>
+        <span class="bottom-label">Настройки</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Логика JS (у тебя уже есть app.js, там подправишь рендер под новый HTML) -->
+  <script src="app.js"></script>
+</body>
+</html>
