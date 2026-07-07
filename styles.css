@@ -1,0 +1,460 @@
+/* Базовые стили */
+:root {
+  --bg-main: #050816;
+  --bg-card: rgba(17, 25, 40, 0.95);
+  --bg-card-soft: rgba(25, 35, 55, 0.9);
+  --accent: #58c4ff;
+  --accent-soft: rgba(88, 196, 255, 0.25);
+  --accent-strong: #4fc3f7;
+  --text-main: #f4f7ff;
+  --text-muted: #a5b4d8;
+  --danger: #ff6b6b;
+  --success: #4caf50;
+  --border-soft: rgba(120, 144, 184, 0.4);
+  --shadow-soft: 0 20px 40px rgba(0, 0, 0, 0.5);
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 10px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text",
+    "Roboto", "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top left, #162447 0, #050816 45%, #000 100%);
+  color: var(--text-main);
+}
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* Основной контейнер приложения */
+.app {
+  position: relative;
+  width: 100%;
+  max-width: 480px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Верхний хедер */
+.app-header {
+  position: relative;
+  padding: 14px 18px 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  backdrop-filter: blur(18px);
+  background: linear-gradient(
+    135deg,
+    rgba(24, 38, 67, 0.95),
+    rgba(9, 18, 36, 0.95)
+  );
+  border-bottom: 1px solid var(--border-soft);
+  z-index: 3;
+}
+
+.header-title {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.header-main {
+  font-weight: 650;
+  font-size: 18px;
+  letter-spacing: 0.02em;
+}
+
+.header-sub {
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.header-user {
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid var(--accent-soft);
+  background: radial-gradient(circle at top right, rgba(88, 196, 255, 0.25), transparent);
+  font-size: 12px;
+  color: var(--accent-strong);
+}
+
+/* Снежинки */
+.snow-container {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.snowflake {
+  position: absolute;
+  top: -10%;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.75);
+  animation: fall linear infinite;
+  opacity: 0.8;
+}
+
+/* Пара снежинк с разным стартом */
+.snowflake:nth-child(1) {
+  left: 10%;
+  animation-duration: 9s;
+  animation-delay: 0s;
+}
+.snowflake:nth-child(2) {
+  left: 25%;
+  animation-duration: 11s;
+  animation-delay: 2s;
+}
+.snowflake:nth-child(3) {
+  left: 45%;
+  animation-duration: 13s;
+  animation-delay: 1s;
+}
+.snowflake:nth-child(4) {
+  left: 65%;
+  animation-duration: 10s;
+  animation-delay: 3s;
+}
+.snowflake:nth-child(5) {
+  left: 80%;
+  animation-duration: 12s;
+  animation-delay: 4s;
+}
+.snowflake:nth-child(6) {
+  left: 50%;
+  animation-duration: 14s;
+  animation-delay: 5s;
+}
+
+@keyframes fall {
+  0% {
+    transform: translateY(-20px) translateX(0) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.9;
+  }
+  50% {
+    transform: translateY(40vh) translateX(10px) rotate(90deg);
+  }
+  100% {
+    transform: translateY(100vh) translateX(-10px) rotate(180deg);
+    opacity: 0;
+  }
+}
+
+/* Основной контент */
+.app-main {
+  position: relative;
+  flex: 1;
+  padding: 10px 14px 70px;
+  z-index: 2;
+}
+
+/* Верхние табы */
+.tabs-top {
+  display: flex;
+  gap: 8px;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(10, 20, 40, 0.9);
+  border: 1px solid rgba(63, 81, 181, 0.5);
+  margin-bottom: 12px;
+}
+
+.tab-top-btn {
+  flex: 1;
+  padding: 6px 0;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.12s ease;
+}
+
+.tab-top-btn.active {
+  background: radial-gradient(circle at top, var(--accent-soft), rgba(21, 41, 79, 0.95));
+  color: var(--text-main);
+  transform: translateY(-1px);
+}
+
+/* Контент вкладок */
+.tab-content {
+  display: none;
+  margin-top: 10px;
+}
+
+.tab-content.active {
+  display: block;
+}
+
+/* Список чатов */
+.chat-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  max-height: calc(100vh - 180px);
+  overflow-y: auto;
+  padding-right: 4px;
+}
+
+.chat-card {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid rgba(100, 130, 210, 0.55);
+  box-shadow: var(--shadow-soft);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+}
+
+.chat-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.65);
+  border-color: var(--accent-strong);
+}
+
+.chat-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: radial-gradient(circle at top, #4fc3f7, #1a237e);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--bg-main);
+  font-weight: 700;
+  font-size: 18px;
+}
+
+.chat-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.chat-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+
+.chat-title {
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.chat-type {
+  font-size: 11px;
+  color: var(--text-muted);
+}
+
+.chat-meta-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.chat-last-message {
+  font-size: 12px;
+  color: var(--text-muted);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 70%;
+}
+
+.chat-counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 11px;
+  color: var(--accent-strong);
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(88, 196, 255, 0.12);
+  border: 1px solid rgba(88, 196, 255, 0.35);
+}
+
+/* Статистика */
+.stats-card {
+  padding: 14px 14px 12px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card-soft);
+  border: 1px solid rgba(100, 130, 210, 0.6);
+  box-shadow: var(--shadow-soft);
+  margin-bottom: 12px;
+}
+
+.stats-card h2,
+.stats-card h3 {
+  margin: 0 0 6px;
+  font-size: 15px;
+}
+
+.stats-number {
+  margin: 4px 0;
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--accent-strong);
+}
+
+.stats-label {
+  margin: 0;
+  font-size: 12px;
+  color: var(--text-muted);
+}
+
+.stats-row {
+  display: flex;
+  gap: 8px;
+}
+
+.stats-card.small {
+  flex: 1;
+}
+
+/* Настройки */
+.settings-block {
+  padding: 14px 14px 12px;
+  border-radius: var(--radius-lg);
+  background: var(--bg-card-soft);
+  border: 1px solid rgba(100, 130, 210, 0.6);
+  box-shadow: var(--shadow-soft);
+}
+
+.settings-block h2 {
+  margin: 0 0 10px;
+  font-size: 15px;
+}
+
+.toggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+  font-size: 13px;
+}
+
+.toggle input {
+  display: none;
+}
+
+.toggle-slider {
+  position: relative;
+  width: 34px;
+  height: 20px;
+  border-radius: 999px;
+  background: rgba(45, 60, 92, 0.9);
+  border: 1px solid rgba(89, 140, 255, 0.6);
+  cursor: pointer;
+  transition: background 0.18s ease;
+}
+
+.toggle-slider::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 3px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--accent-strong);
+  transition: transform 0.18s ease;
+}
+
+.toggle input:checked + .toggle-slider {
+  background: rgba(39, 174, 96, 0.9);
+  border-color: rgba(39, 174, 96, 0.9);
+}
+
+.toggle input:checked + .toggle-slider::before {
+  transform: translateX(12px);
+}
+
+/* Нижняя навигация */
+.bottom-nav {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: 6px 12px 10px;
+  display: flex;
+  justify-content: space-around;
+  gap: 8px;
+  background: linear-gradient(
+    to top,
+    rgba(5, 8, 22, 0.98),
+    rgba(5, 8, 22, 0.85)
+  );
+  border-top: 1px solid rgba(63, 81, 181, 0.6);
+  backdrop-filter: blur(18px);
+  z-index: 4;
+}
+
+.bottom-btn {
+  flex: 1;
+  border: none;
+  border-radius: 999px;
+  padding: 6px 0 4px;
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, transform 0.1s ease;
+}
+
+.bottom-btn .bottom-icon {
+  font-size: 16px;
+}
+
+.bottom-btn.active {
+  background: radial-gradient(circle at top, var(--accent-soft), rgba(21, 41, 79, 0.95));
+  color: var(--text-main);
+  transform: translateY(-1px);
+}
+
+/* Скроллбар для чат‑листа (мягкий) */
+.chat-list::-webkit-scrollbar {
+  width: 4px;
+}
+.chat-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-list::-webkit-scrollbar-thumb {
+  background: rgba(88, 196, 255, 0.5);
+  border-radius: 999px;
+}
