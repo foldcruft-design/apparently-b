@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BotControl — Панель управления</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- =====================================================
+         LOGIN
+    ====================================================== -->
+
+    <section class="login-screen" id="loginScreen">
+
+        <div class="login-orb orb-one"></div>
+        <div class="login-orb orb-two"></div>
+        <div class="login-orb orb-three"></div>
+
+        <div class="login-card glass">
+
+            <div class="login-logo">
+                <span>◆</span>
+            </div>
+
+            <h1>BotControl</h1>
+
+            <p class="login-subtitle">
+                Панель управления Telegram-ботом
+            </p>
+
+            <form id="loginForm">
+
+                <div class="input-group">
+
+                    <label for="password">
+                        Пароль администратора
+                    </label>
+
+                    <div class="password-wrapper">
+
+                        <input
+                            type="password"
+                            id="password"
+                            placeholder="Введите пароль"
+                            autocomplete="current-password"
+                            required
+                        >
+
+                        <button
+                            type="button"
+                            class="password-toggle"
+                            id="passwordToggle"
+                            aria-label="Показать пароль"
+                        >
+                            <svg
+                                id="eyeOpen"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z"/>
+                                <circle cx="12" cy="12" r="3"/>
+                            </svg>
+
+                            <svg
+                                id="eyeClosed"
+                                class="hidden"
+                                viewBox="0 0 24 24"
+                            >
+                                <path d="M3 3l18 18"/>
+                                <path d="M10.6 10.6a2 2 0 0 0 2.8 2.8"/>
+                                <path d="M9.9 5.2A10.8 10.8 0 0 1 12 5c6.5 0 10 7 10 7"/>
+                                <path d="M6.1 6.1C3.5 8.1 2 12 2 12s3.5 7 10 7"/>
+                            </svg>
+                        </button>
+
+                    </div>
+
+                </div>
+
+                <div
+                    class="login-error hidden"
+                    id="loginError"
+                >
+                    Неверный пароль
+                </div>
+
+                <button
+                    type="submit"
+                    class="primary-button login-button"
+                    id="loginButton"
+                >
+                    <span>Войти в панель</span>
+                    <span class="button-arrow">→</span>
+                </button>
+
+            </form>
+
+            <div class="security-note">
+                <span class="security-icon">●</span>
+                Защищённое соединение
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =====================================================
+         APPLICATION
+    ====================================================== -->
+
+    <section class="app hidden" id="app">
+
+        <!-- SIDEBAR -->
+
+        <aside class="sidebar glass">
+
+            <div class="sidebar-logo">
+                <div class="logo-mark">◆</div>
+
+                <div>
+                    <strong>BotControl</strong>
+                    <small>ADMIN PANEL</small>
+                </div>
+            </div>
+
+            <nav class="navigation">
+
+                <button
+                    class="nav-item active"
+                    data-page="dashboard"
+                >
+                    <span class="nav-icon">⌂</span>
+                    <span>Главная</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-page="channels"
+                >
+                    <span class="nav-icon">◈</span>
+                    <span>Каналы</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-page="users"
+                >
+                    <span class="nav-icon">♙</span>
+                    <span>Пользователи</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-page="tickets"
+                >
+                    <span class="nav-icon">▱</span>
+                    <span>Обращения</span>
+
+                    <span
+                        class="nav-badge"
+                        id="ticketBadge"
+                    >
+                        0
+                    </span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-page="ads"
+                >
+                    <span class="nav-icon">◇</span>
+                    <span>Реклама</span>
+                </button>
+
+                <button
+                    class="nav-item"
+                    data-page="admins"
+                >
+                    <span class="nav-icon">♚</span>
+                    <span>Администраторы</span>
+                </button>
+
+            </nav>
+
+            <div class="sidebar-bottom">
+
+                <button
+                    class="nav-item"
+                    data-page="settings"
+                >
+                    <span class="nav-icon">⚙</span>
+                    <span>Настройки</span>
+                </button>
+
+                <button
+                    class="logout-button"
+                    id="logoutButton"
+                >
+                    <span>↪</span>
+                    Выйти
+                </button>
+
+            </div>
+
+        </aside>
+
+
+        <!-- MAIN -->
+
+        <main class="main-content">
+
+            <!-- TOPBAR -->
+
+            <header class="topbar">
+
+                <div>
+
+                    <button
+                        class="mobile-menu"
+                        id="mobileMenu"
+                    >
+                        ☰
+                    </button>
+
+                    <h2 id="pageTitle">
+                        Главная
+                    </h2>
+
+                    <p id="pageSubtitle">
+                        Обзор состояния вашего бота
+                    </p>
+
+                </div>
+
+                <div class="topbar-right">
+
+                    <div class="connection-status">
+                        <span class="status-dot"></span>
+                        <span>Online</span>
+                    </div>
+
+                    <div class="admin-profile">
+
+                        <div class="admin-avatar">
+                            A
+                        </div>
+
+                        <div>
+                            <strong>Administrator</strong>
+                            <small>Главный администратор</small>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </header>
+
+
+            <!-- =================================================
+                 DASHBOARD
+            ================================================== -->
+
+            <div
+                class="page active"
+                id="page-dashboard"
+            >
+
+                <div class="stats-grid">
+
+                    <div class="stat-card glass">
+
+                        <div class="stat-icon purple">
+                            ♙
+                        </div>
+
+                        <div class="stat-info">
+                            <span>Заблокировано</span>
+                            <strong id="statBanned">0</strong>
+                        </div>
+
+                        <span class="stat-decoration">01</span>
+
+                    </div>
+
+                    <div class="stat-card glass">
+
+                        <div class="stat-icon blue">
+                            ◈
+                        </div>
+
+                        <div class="stat-info">
+                            <span>Каналов</span>
+                            <strong id="statChannels">0</strong>
+                        </div>
+
+                        <span class="stat-decoration">02</span>
+
+                    </div>
+
+                    <div class="stat-card glass">
+
+                        <div class="stat-icon green">
+                            ▱
+                        </div>
+
+                        <div class="stat-info">
+                            <span>Обращений</span>
+                            <strong id="statTickets">0</strong>
+                        </div>
+
+                        <span class="stat-decoration">03</span>
+
+                    </div>
+
+                    <div class="stat-card glass">
+
+                        <div class="stat-icon orange">
+                            ◇
+                        </div>
+
+                        <div class="stat-info">
+                            <span>Реклама</span>
+                            <strong id="statAds">0</strong>
+                        </div>
+
+                        <span class="stat-decoration">04</span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="dashboard-grid">
+
+                    <div class="panel glass">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>Состояние системы</h3>
+                                <p>Текущее состояние компонентов</p>
+                            </div>
+
+                            <span class="live-label">
+                                LIVE
+                            </span>
+
+                        </div>
+
+                        <div class="system-list">
+
+                            <div class="system-row">
+
+                                <div class="system-name">
+                                    <span class="system-icon">◆</span>
+                                    Telegram Bot
+                                </div>
+
+                                <span class="system-ok">
+                                    Работает
+                                </span>
+
+                            </div>
+
+                            <div class="system-row">
+
+                                <div class="system-name">
+                                    <span class="system-icon">◇</span>
+                                    API Server
+                                </div>
+
+                                <span class="system-ok">
+                                    Работает
+                                </span>
+
+                            </div>
+
+                            <div class="system-row">
+
+                                <div class="system-name">
+                                    <span class="system-icon">▦</span>
+                                    Database
+                                </div>
+
+                                <span class="system-ok">
+                                    Работает
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="panel glass">
+
+                        <div class="panel-header">
+
+                            <div>
+                                <h3>Быстрые действия</h3>
+                                <p>Основные операции</p>
+                            </div>
+
+                        </div>
+
+                        <div class="quick-actions">
+
+                            <button
+                                class="quick-action"
+                                data-page-target="users"
+                            >
+                                <span>♙</span>
+                                Заблокировать
+                            </button>
+
+                            <button
+                                class="quick-action"
+                                data-page-target="channels"
+                            >
+                                <span>◈</span>
+                                Каналы
+                            </button>
+
+                            <button
+                                class="quick-action"
+                                data-page-target="tickets"
+                            >
+                                <span>▱</span>
+                                Обращения
+                            </button>
+
+                            <button
+                                class="quick-action"
+                                data-page-target="ads"
+                            >
+                                <span>◇</span>
+                                Реклама
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div class="panel glass activity-panel">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>Последние действия</h3>
+                            <p>Активность панели</p>
+                        </div>
+
+                        <button
+                            class="secondary-button"
+                            id="refreshActivity"
+                        >
+                            ↻ Обновить
+                        </button>
+
+                    </div>
+
+                    <div
+                        class="activity-list"
+                        id="activityList"
+                    >
+
+                        <div class="empty-state">
+                            <span>◇</span>
+                            <p>Нет последних действий</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 CHANNELS
+            ================================================== -->
+
+            <div
+                class="page"
+                id="page-channels"
+            >
+
+                <div class="page-actions">
+
+                    <div>
+                        <h3>Управление каналами</h3>
+                        <p>Каналы, в которых применяется блокировка</p>
+                    </div>
+
+                    <button
+                        class="primary-button"
+                        id="addChannelButton"
+                    >
+                        + Добавить канал
+                    </button>
+
+                </div>
+
+                <div class="panel glass">
+
+                    <div class="table-header">
+
+                        <span>Название</span>
+                        <span>ID</span>
+                        <span>Статус</span>
+                        <span>Действия</span>
+
+                    </div>
+
+                    <div
+                        class="table-body"
+                        id="channelsList"
+                    >
+
+                        <div class="empty-state">
+                            <span>◈</span>
+                            <p>Каналы не загружены</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 USERS
+            ================================================== -->
+
+            <div
+                class="page"
+                id="page-users"
+            >
+
+                <div class="page-actions">
+
+                    <div>
+                        <h3>Пользователи</h3>
+                        <p>Управление блокировками</p>
+                    </div>
+
+                </div>
+
+                <div class="action-card glass">
+
+                    <div class="action-card-icon">
+                        ♙
+                    </div>
+
+                    <div class="action-card-content">
+
+                        <h3>Заблокировать пользователя</h3>
+
+                        <p>
+                            Пользователь будет добавлен в список
+                            заблокированных и забанен в подключенных каналах.
+                        </p>
+
+                        <div class="inline-form">
+
+                            <input
+                                type="number"
+                                id="banUserId"
+                                placeholder="Telegram ID пользователя"
+                            >
+
+                            <button
+                                class="danger-button"
+                                id="banUserButton"
+                            >
+                                Заблокировать
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="panel glass">
+
+                    <div class="panel-header">
+
+                        <div>
+                            <h3>Заблокированные пользователи</h3>
+                            <p>Список BANNED_USERS</p>
+                        </div>
+
+                    </div>
+
+                    <div
+                        class="table-body"
+                        id="bannedUsersList"
+                    >
+
+                        <div class="empty-state">
+                            <span>♙</span>
+                            <p>Список пуст</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 TICKETS
+            ================================================== -->
+
+            <div
+                class="page"
+                id="page-tickets"
+            >
+
+                <div class="page-actions">
+
+                    <div>
+                        <h3>Обращения</h3>
+                        <p>Жалобы и сообщения пользователей</p>
+                    </div>
+
+                    <button
+                        class="secondary-button"
+                        id="refreshTickets"
+                    >
+                        ↻ Обновить
+                    </button>
+
+                </div>
+
+                <div
+                    class="tickets-grid"
+                    id="ticketsList"
+                >
+
+                    <div class="empty-state glass">
+                        <span>▱</span>
+                        <p>Нет обращений</p>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 ADS
+            ================================================== -->
+
+            <div
+                class="page"
+                id="page-ads"
+            >
+
+                <div class="page-actions">
+
+                    <div>
+                        <h3>Реклама</h3>
+                        <p>Публикация рекламных постов</p>
+                    </div>
+
+                </div>
+
+                <div class="ad-form glass">
+
+                    <div class="form-section">
+
+                        <label>Длительность</label>
+
+                        <div class="duration-grid">
+
+                            <button
+                                class="duration-option active"
+                                data-duration="60"
+                            >
+                                <strong>60 мин</strong>
+                                <span>50 ⭐</span>
+                            </button>
+
+                            <button
+           
