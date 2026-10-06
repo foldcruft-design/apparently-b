@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>UOSALE SEARCH</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+    <!-- Главное меню -->
+    <div id="view-home" class="view active">
+        <div class="header glass">
+            <h1>UOSALE ENGINE</h1>
+            <p>MTProto Search System</p>
+        </div>
+        
+        <div class="grid-menu">
+            <button class="glass btn-menu" onclick="nav('search')">🔎 Поиск</button>
+            <button class="glass btn-menu" onclick="nav('profile')">👤 Профиль</button>
+            <button class="glass btn-menu" onclick="nav('roulette')">🎰 Рулетка</button>
+            <button class="glass btn-menu" onclick="nav('themes')">🎨 Темы</button>
+            <button class="glass btn-menu" onclick="nav('referrals')">🤝 Рефералы</button>
+            <button class="glass btn-menu" onclick="nav('settings')">⚙️ Настройки</button>
+        </div>
+        
+        <button class="glass btn-action mt-20" onclick="sendAction('nav_premium')">💎 Купить Premium</button>
+    </div>
+
+    <!-- Раздел: Поиск -->
+    <div id="view-search" class="view">
+        <div class="header glass">
+            <h2>Параметры поиска</h2>
+            <button class="glass btn-back" onclick="nav('home')">Назад</button>
+        </div>
+        <div class="glass card mt-20">
+            <p>Выберите длину юзернейма:</p>
+            <div class="lengths-grid mt-20">
+                <button class="glass btn-len" onclick="sendAction('action_search_5')">5</button>
+                <button class="glass btn-len" onclick="sendAction('action_search_6')">6</button>
+                <button class="glass btn-len" onclick="sendAction('action_search_7')">7</button>
+                <button class="glass btn-len" onclick="sendAction('action_search_8')">8</button>
+                <button class="glass btn-len" onclick="sendAction('action_search_9')">9</button>
+            </div>
+            <p class="hint mt-20">5-значные логины доступны только с VIP или за бонусы.</p>
+        </div>
+    </div>
+
+    <!-- Раздел: Рулетка -->
+    <div id="view-roulette" class="view">
+        <div class="header glass">
+            <h2>Колесо Фортуны</h2>
+            <button class="glass btn-back" onclick="nav('home')">Назад</button>
+        </div>
+        <div class="glass card mt-20 center">
+            <div class="roulette-wheel glass">🎰</div>
+            <p class="mt-20">Испытай удачу и выиграй VIP или Темы!</p>
+            <button class="glass btn-action mt-20" onclick="sendAction('action_spin_roulette')">Крутить Рулетку</button>
+        </div>
+    </div>
+
+    <!-- Раздел: Темы -->
+    <div id="view-themes" class="view">
+        <div class="header glass">
+            <h2>Управление Темами</h2>
+            <button class="glass btn-back" onclick="nav('home')">Назад</button>
+        </div>
+        <div class="glass card mt-20">
+            <button class="glass btn-action mb-10" onclick="sendAction('equip_theme_classic')">Classic (Базовая)</button>
+            <button class="glass btn-action mb-10" onclick="sendAction('equip_theme_cube')">Cube (Из рулетки)</button>
+            <button class="glass btn-action mb-10" onclick="sendAction('equip_theme_cyber_punk')">Cyber Punk (Редкая)</button>
+            <button class="glass btn-action" onclick="sendAction('equip_theme_blood')">Blood (Уникальная)</button>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
